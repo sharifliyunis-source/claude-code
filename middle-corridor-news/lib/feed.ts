@@ -105,6 +105,17 @@ export async function fetchAllFeeds(): Promise<FeedResult> {
       new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
   );
 
+  // Local-preview fallback: when USE_SAMPLE_DATA=1 and no live articles
+  // could be fetched (e.g. sandboxed dev environment), show sample data.
+  if (unique.length === 0 && process.env.USE_SAMPLE_DATA === "1") {
+    const { SAMPLE_ARTICLES } = await import("@/data/sample-articles");
+    return {
+      articles: SAMPLE_ARTICLES,
+      fetchedAt: new Date().toISOString(),
+      errorCount,
+    };
+  }
+
   const summarized = await summarizeArticles(unique);
 
   return {
