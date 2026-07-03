@@ -91,8 +91,10 @@ export default function NewsCard({ article, variant = "default" }: Props) {
         <h3 className="font-bold text-slate-900 group-hover:text-amber-600 transition-colors line-clamp-3 leading-snug">
           {article.title}
         </h3>
-        {article.summary && (
-          <p className="text-sm text-slate-500 line-clamp-2">{article.summary}</p>
+        {(article.aiSummary ?? article.summary) && (
+          <p className="text-sm text-slate-500 line-clamp-2">
+            {article.aiSummary ?? article.summary}
+          </p>
         )}
         <div className="mt-auto pt-2 flex items-center justify-between text-xs text-slate-400">
           <span className="font-medium">{article.sourceName}</span>

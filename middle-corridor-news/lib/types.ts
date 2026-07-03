@@ -11,6 +11,7 @@ export interface Article {
   publishedAt: string;
   imageUrl?: string;
   country: string;
+  aiSummary?: string;
 }
 
 export interface FeedResult {

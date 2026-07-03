@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!article) return {};
   return {
     title: article.title,
-    description: article.summary,
+    description: article.aiSummary ?? article.summary,
     openGraph: {
       images: article.imageUrl ? [{ url: article.imageUrl }] : [],
     },
@@ -92,10 +92,17 @@ export default async function ArticlePage({ params }: Props) {
           </div>
         )}
 
-        {article.summary && (
-          <p className="text-slate-600 text-lg leading-relaxed mb-8">
-            {article.summary}
-          </p>
+        {(article.aiSummary ?? article.summary) && (
+          <div className="mb-8">
+            {article.aiSummary && (
+              <span className="inline-block text-xs font-semibold text-slate-400 uppercase tracking-wide mb-2">
+                AI Summary
+              </span>
+            )}
+            <p className="text-slate-600 text-lg leading-relaxed">
+              {article.aiSummary ?? article.summary}
+            </p>
+          </div>
         )}
 
         {/* External link */}

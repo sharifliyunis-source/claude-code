@@ -1,6 +1,7 @@
 import Parser from "rss-parser";
 import crypto from "crypto";
 import { NEWS_SOURCES, MIDDLE_CORRIDOR_KEYWORDS } from "@/data/sources";
+import { summarizeArticles } from "./summarize";
 import type { Article, FeedResult } from "./types";
 
 const parser = new Parser({
@@ -104,8 +105,10 @@ export async function fetchAllFeeds(): Promise<FeedResult> {
       new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
   );
 
+  const summarized = await summarizeArticles(unique);
+
   return {
-    articles: unique,
+    articles: summarized,
     fetchedAt: new Date().toISOString(),
     errorCount,
   };

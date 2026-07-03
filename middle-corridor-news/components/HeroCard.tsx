@@ -39,9 +39,9 @@ export default function HeroCard({ article }: Props) {
         <h2 className="text-white font-black text-2xl md:text-3xl leading-tight group-hover:text-amber-300 transition-colors">
           {article.title}
         </h2>
-        {article.summary && (
+        {(article.aiSummary ?? article.summary) && (
           <p className="text-slate-300 text-sm line-clamp-2 max-w-2xl">
-            {article.summary}
+            {article.aiSummary ?? article.summary}
           </p>
         )}
         <div className="flex items-center gap-2 text-xs text-slate-400">
